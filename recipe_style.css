@@ -1,0 +1,203 @@
+.navbar {
+  justify-content: center;
+  background-color: transparent;
+
+
+}
+
+.navbar-nav {
+  width: 100%;
+  justify-content: center;
+}
+
+.nav-item {
+  text-align: center;
+}
+.navbar-custom {
+  background-color: transparent !important;
+  font-size: 20px;
+  font-family: outfit;
+}
+.navbar-custom,
+.navbar-custom .navbar-nav .nav-link {
+  color: #e07a5f !important;
+}
+
+
+
+
+.title {
+  font-family: "outfit", "IBM Plex Sans",monospace;
+  font-size: 75px;
+  text-align: center;
+  font-weight: bold;
+  color: #e07a5f;
+
+}
+
+body {
+    font-family: "outfit", monospace;
+    background: linear-gradient(to bottom, #000000, #000000);
+    color: #e07a5f;
+
+}
+
+
+input[type="text"],
+input[type="number"],
+select {
+  border-radius: 10px;
+  border-color: transparent;
+}
+
+.add-ingredient-button,
+.custom-button {
+  border-radius: 10px;
+  border-color: transparent;
+  background-color: #e07a5f;
+  color: #f4f1de;
+}
+.add-ingredient-button:hover {
+    background-color: #f28482;
+}
+
+.custom-button {
+  background-color: #e07a5f;
+  border-radius: 10px;
+  color: #f4f1de;
+}
+
+.delete-recipe {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.delete-button {
+  background-color: #e07a5f;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+}
+.delete-button:hover {
+  background-color: red; /* Change to your desired hover background color */
+}
+
+.cook-recipe-button {
+  background-color: #e07a5f;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  position: relative;
+  padding-right: 35px;
+}
+.cook-recipe-button:hover {
+    background-color: #f28482;
+}
+.cook-recipe-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 20px; /* Adjust the width and height based on the icon size */
+  height: 20px;
+  /* ... other styles ... */
+}
+
+.row {
+    display: flex;
+    width: 100%;
+    height: 70%;
+    margin-left: 5%;
+    margin-top: 2%
+}
+
+.add-recipe {
+    padding: 20px;
+    height: 20rem;
+    background-color: #eeeeee;
+    width: 500px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+.add_recipe_button:hover {
+    color: #f28482;
+}
+.recipe-list-carousel {
+}
+
+
+/* Add your existing CSS styles */
+
+.carousel-container {
+  position: relative;
+  height: 20rem;
+  overflow: hidden;
+  width: 500px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: transparent;
+  color: #333;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.left-arrow {
+  left: 10px;
+  cursor: pointer;
+}
+
+.right-arrow {
+  right: 10px;
+  cursor: pointer;
+}
+
+.carousel {
+    display: flex;
+    width: calc(100% * 3);
+    height: 100%;
+    overflow: hidden;
+    background-color: #999999;
+    transition: transform 0.3s ease-in-out;
+}
+
+
+
+.carousel-items {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  padding: 20px;
+  width: 100%;
+}
+
+.carousel-item {
+  flex: 0 0 50%;
+  display: none;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: #999999;
+  height: calc(100% - 40px); /* Subtract padding from the height */
+  margin-top: 20px;
+  color: white;
+}
+
+.carousel-item:first-child {
+  display: block;
+}
+.carousel-item-content {
+  height: 100%; /* Ensure the content takes up the full height of the carousel item */
+  box-sizing: border-box; /* Include padding in the height calculation */
+}
+
+
+

@@ -1,0 +1,10 @@
+body {
+    background-color: #91C4F2;
+    font-family: "Quicksand";
+}
+
+."navbar navbar-expand-lg navbar-dark bg-dark" {
+    justify-content: center;
+    background-color: transparent;
+    color: red;
+}

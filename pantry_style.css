@@ -1,0 +1,237 @@
+.title{
+  font-family: "outfit","IBM Plex Sans",monospace;
+  font-size: 80px;
+  text-align: center;
+  font-weight: bold;
+  color: #F2E9E4;
+}
+
+/** {
+  box-sizing: border-box;
+}*/
+
+.slider {
+  width: 500px;
+  text-align: center;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.slides {
+
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  /*
+  scroll-snap-points-x: repeat(300px);
+  scroll-snap-type: mandatory;
+  */
+}
+.slides::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.slides::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 20px;
+}
+.slides::-webkit-scrollbar-track {
+  background: transparent;
+}
+.slides > div {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 500px;
+  height: 500px;
+  margin-right: 50px;
+  border-radius: 20px;
+  background: #eee;
+  transform-origin: center center;
+  transform: scale(1);
+  transition: transform 0.5s;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+.slides > div:target {
+/*   transform: scale(0.8); */
+}
+or-info a {
+  color: white;
+}
+img {
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.slider > a {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  background: white;
+  text-decoration: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 0 0.5rem 0;
+  position: relative;
+}
+
+.slider > a:active {
+  top: 1px;
+}
+.slider > a:focus {
+  background: #000;
+}
+
+/* Don't need button navigation */
+@supports (scroll-snap-type) {
+  .slider > a {
+    display: none;
+  }
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #48cae4, #0096c7);
+  font-family: "outfit", 'IBM Plex Sans', monospace;
+
+}
+
+.slider-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-button{
+    background-color: #22223B;
+    color: white;
+}
+
+#slide-1 h2 {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+#slide-2 h2 {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px; /* Add margin at the bottom of the title */
+
+}
+
+#slide-2 ul {
+  list-style: none;
+  padding: 0;
+}
+
+#slide-2 ul li {
+  display: flex;
+  align-items: center;
+}
+
+#slide-2 ul li button {
+  margin-left: 50px; /* Increase the margin value as desired */
+}
+
+
+
+#slide-1 input[type="text"],
+#slide-1 input[type="number"],
+#slide-1 select,
+#slide-1 input[type="date"] {
+  border-radius: 10px; /* Adjust the value as desired */
+  border-color: transparent;
+}
+
+.navbar {
+  justify-content: center;
+  background-color: transparent;
+}
+
+.navbar-nav {
+  width: 100%;
+  justify-content: center;
+}
+
+.nav-item {
+  text-align: center;
+}
+.navbar-custom {
+  background-color: transparent !important;
+  font-size: 20px;
+}
+
+.slides h2 {
+    font-weight: bold;
+}
+.food-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  overflow-y: auto;
+  max-height: 400px; /* Adjust the maximum height as desired */
+  margin-top: 40px;
+}
+.food-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.food-item {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #eee;
+  font-size: 18px;
+}
+
+.food-info {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.food-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.food-amount {
+  margin-right: 10px;
+}
+
+.food-expiry {
+  color: #888;
+}
+
+.low-stock .food-name {
+  color: red;
+}
