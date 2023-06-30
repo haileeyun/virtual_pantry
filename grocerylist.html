@@ -1,0 +1,75 @@
+{% extends "base.html" %}{% block title %}Grocery List{% endblock %}
+
+{% block content %}
+<br />
+<head>
+  <meta charset="UTF-8">
+  <title>home</title>
+  <link rel="stylesheet" href="../static/css/grocerylist_style.css" type="text/css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
+  <script src="../static/index.js"></script>
+
+  <style>
+  body {
+    font-family: "Quicksand", sans-serif;
+  }
+  </style>
+
+</head>
+
+
+<h1 class="title" align="center">grocery list</h1>
+
+<div class="grocery-bag">
+  <img src="../static/images/shopping-basket.svg" alt="corn">
+</div>
+
+
+<div class="grocery-list">
+  <ul class="food-list">
+    {% for food in user.foods|sort(attribute='expirationDate') %}
+      <li>
+        <div class="food-item {% if food.amount < 5 %}low-stock{% endif %}">
+          <div class="food-info">
+            <span class="food-name">{{ food.name }}</span>
+            <span class="food-amount">{{ food.amount }} {{ food.unit }}</span>
+            <span class="food-expiry">Expires on {{ food.expirationDate }}</span>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+<script>
+  // Get the current date
+  var currentDate = new Date();
+
+  // Get all food items and their expiration dates
+  var foodItems = document.querySelectorAll('.food-item');
+  var foodExpiryDates = document.querySelectorAll('.food-expiry');
+
+  // Iterate over each food item and compare its expiration date with the current date
+  foodExpiryDates.forEach(function (expiryDate, index) {
+    var foodExpiry = new Date(expiryDate.textContent.replace('Expires on ', ''));
+    var timeDifference = foodExpiry.getTime() - currentDate.getTime();
+    var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+    // Apply appropriate font color based on expiration status
+    var foodItem = foodItems[index];
+    if (daysDifference <= 3) {
+      foodItem.classList.add('expired');
+    } else if (daysDifference < 7) {
+      foodItem.classList.add('near-expiry');
+    } else if (daysDifference >= 7) {
+      foodItem.classList.add('fresh');
+    }
+  });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}{% block title %}Pantry{% endblock %}
+
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <title>Pantry</title>
+  <link rel="stylesheet" href="../static/css/pantry_style.css" type="text/css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="../static/index.js"></script>
+</head>
+
+<h1 class="title">Pantry</h1>
+
+<div class="slider-container">
+  <div class="slider">
+    <a href="#slide-1">1</a>
+    <a href="#slide-2">2</a>
+
+    <div class="slides">
+      <div id="slide-1">
+        <h2 align="center">Add an Item:</h2>
+        <form method="POST">
+          <label for="name">Food Name:</label>
+          <input type="text" name="name" id="name" required>
+          <br><br>
+          <label for="amount">Amount:</label>
+          <input type="number" id="amount" name="amount" required oninput="this.value = Math.max(0, parseInt(this.value) || 0)">
+          <select id="unit" name="unit">
+            <option value="kg">kg</option>
+            <option value="g">g</option>
+            <option value="lb">lb</option>
+            <option value="oz">oz</option>
+            <option value="cup">cup</option>
+            <option value="tbs">tbs</option>
+            <option value="tsp">tsp</option>
+            <option value="pcs">pcs</option>
+            <option value="custom">Custom</option>
+          </select>
+          <input type="text" id="customUnit" name="customUnit" placeholder="Enter custom unit" style="display: none;">
+          <br><br>
+          <label for="expirationDate">Expiration Date:</label>
+          <input type="date" id="expirationDate" name="expirationDate" required>
+          <br><br>
+          <div class="add_food_button" align="left">
+            <button type="submit" class="btn custom-button">Add Food!</button>
+          </div>
+        </form>
+        <br />
+      </div>
+      <div id="slide-2">
+        <h2 align="center">Food Items:</h2>
+        <br />
+        <ul class="food-list">
+            {% for food in user.foods|sort(attribute='name') %}
+            <li>
+              <div class="food-item {% if food.amount < 5 %}low-stock{% endif %}">
+                <div class="food-info">
+                  <span class="food-name">{{ food.name }}</span>
+                  <span class="food-amount">{{ food.amount }} {{ food.unit }}</span>
+                  <span class="food-expiry">Expires on {{ food.expirationDate }}</span>
+
+                </div>
+                <button type="button" class="close" onClick="deleteFood({{ food.id }})">
+                  <span aria-hidden="true">&times</span>
+                </button>
+              </div>
+            </li>
+            {% endfor %}
+        </ul>
+          
+{% endblock %}
+
+

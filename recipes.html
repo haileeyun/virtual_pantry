@@ -1,0 +1,225 @@
+{% extends "base.html" %}{% block title %}Recipes{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>recipes</title>
+    <link rel="stylesheet" href="../static/css/recipe_style.css" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
+    <script src="../static/index.js"></script>
+
+    <style>
+        body {
+            font-family: "Quicksand", sans-serif;
+        }
+    </style>
+
+</head> 
+
+<body>
+    <br />
+
+
+
+    <h1 class="title">recipes</h1>
+
+    <div class="row">
+        <div class="add-recipe">
+            <h2>Add a Recipe:</h2>
+            <form method="POST">
+                <label for="recipe_name">Recipe Name:</label>
+                <input type="text" name="recipe_name" id="recipe_name" required>
+                <br><br>
+
+                <div id="ingredient_fields">
+                    <label>Ingredients:</label>
+                    <div class="ingredient-group">
+                        <select name="ingredient_name[]" required>
+                            <option value="">Select an ingredient</option>
+                            {% for food in user.foods %}
+                            <option value="{{ food.name }}">{{ food.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="number" name="ingredient_amount[]" required>
+                        <select name="ingredient_unit[]" required>
+                            <option value="kg">kg</option>
+                            <option value="g">g</option>
+                            <option value="lb">lb</option>
+                            <option value="oz">oz</option>
+                            <option value="cup">cup</option>
+                            <option value="tbs">tbs</option>
+                            <option value="tsp">tsp</option>
+                            <option value="pcs">pcs</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <button class="add-ingredient-button" type="button" onclick="addIngredientField()">Add Ingredient</button>
+
+                <br><br>
+
+                <div class="add_recipe_button">
+                    <button type="submit" class="btn custom-button">Add Recipe!</button>
+                </div>
+            </form>
+        </div>
+        <br />
+
+        <div class="recipe-list-carousel">
+            <div class="carousel-container">
+                <button class="carousel-arrow left-arrow" onclick="carouselPrev()">&#10094;</button>
+                <div class="carousel">
+                    <ul class="carousel-items">
+                        {% for recipe in user.recipes %}
+                        <li class="carousel-item">
+                            <div id="recipe-{{ recipe.id }}">
+                                {{ recipe.name }}
+                                <ul>
+                                    {% for ingredient in recipe.ingredients %}
+                                    <li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.unit }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="delete-recipe">
+                                    <button type="button" class="delete-button" onClick="deleteRecipe({{ recipe.id }})">
+                                        Delete Recipe
+                                    </button>
+                                </div>
+                                <div class="cook-recipe">
+                                    <button type="button" class="cook-recipe-button" onClick="cookRecipe({{ recipe.id }})">
+                                        Cook Recipe
+                                        <img src="../static/images/frying-pan.svg" alt="Frying Pan" class="cook-recipe-icon">
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <button class="carousel-arrow right-arrow" onclick="carouselNext()">&#10095;</button>
+            </div>
+        </div>
+    </div>
+    <script>
+  function addIngredientField() {
+    var ingredientGroup = document.createElement("div");
+    ingredientGroup.classList.add("ingredient-group");
+    ingredientGroup.innerHTML = `
+      <select name="ingredient_name[]" required>
+        <option value="">Select an ingredient</option>
+        {% for food in user.foods %}
+        <option value="{{ food.name }}">{{ food.name }}</option>
+        {% endfor %}
+      </select>
+      <input type="number" name="ingredient_amount[]" required>
+      <select name="ingredient_unit[]" required>
+        <option value="kg">kg</option>
+        <option value="g">g</option>
+        <option value="lb">lb</option>
+        <!-- Add other unit options -->
+        <option value="oz">oz</option>
+        <option value="cup">cup</option>
+        <option value="tbs">tbs</option>
+        <option value="tsp">tsp</option>
+        <option value="pcs">pcs</option>
+        <option value="custom">Custom</option>
+      </select>
+    `;
+    document.getElementById("ingredient_fields").appendChild(ingredientGroup);
+  }
+    </script>
+    <script>
+        // JavaScript function to add ingredient fields dynamically
+        document.getElementById("add-ingredient-btn").addEventListener("click", function () {
+            var ingredientsDiv = document.getElementById("ingredients");
+
+            var ingredientDiv = document.createElement("div");
+            ingredientDiv.classList.add("ingredient");
+
+            var nameInput = document.createElement("input");
+            nameInput.type = "text";
+            nameInput.name = "ingredient_name[]";
+            nameInput.placeholder = "Ingredient Name";
+            nameInput.required = true;
+
+            var amountInput = document.createElement("input");
+            amountInput.type = "number";
+            amountInput.name = "ingredient_amount[]";
+            amountInput.placeholder = "Amount";
+            amountInput.required = true;
+
+            var unitSelect = document.createElement("select");
+            unitSelect.name = "ingredient_unit[]";
+
+            var units = ["kg", "g", "lb", "oz", "cup", "tbs", "tsp", "pcs", "custom"];
+            for (var i = 0; i < units.length; i++) {
+                var option = document.createElement("option");
+                option.value = units[i];
+                option.text = units[i];
+                unitSelect.appendChild(option);
+            }
+
+            ingredientDiv.appendChild(nameInput);
+            ingredientDiv.appendChild(amountInput);
+            ingredientDiv.appendChild(unitSelect);
+            ingredientsDiv.appendChild(ingredientDiv);
+        });
+    </script>
+
+    <script>
+
+        function deleteRecipe(recipeId) {
+            fetch("/delete-recipe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ recipeId: recipeId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Recipe deleted successfully') {
+                        var recipeId = data.recipeId;
+                        var recipeElement = document.getElementById(`recipe-${recipeId}`);
+                        if (recipeElement) {
+                            recipeElement.remove(); // Remove the deleted recipe from the page
+                        }
+                    } else {
+                        console.log('Failed to delete recipe');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+    <script>
+        var carouselIndex = 0;
+        var carouselItems = document.getElementsByClassName("carousel-item");
+
+        function showCarouselItems() {
+            for (var i = 0; i < carouselItems.length; i++) {
+                carouselItems[i].style.display = "none";
+            }
+            carouselItems[carouselIndex].style.display = "block";
+        }
+
+        function carouselPrev() {
+            carouselIndex = (carouselIndex - 1 + carouselItems.length) % carouselItems.length;
+            showCarouselItems();
+        }
+
+        function carouselNext() {
+            carouselIndex = (carouselIndex + 1) % carouselItems.length;
+            showCarouselItems();
+        }
+
+        showCarouselItems();
+
+    </script>
+</body>
+
+{% endblock %}

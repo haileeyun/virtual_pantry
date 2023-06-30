@@ -1,0 +1,83 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+
+<br />
+
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <link rel="stylesheet" href="../static/css/home_style.css" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=DM+Serif+Display">
+    <script src="../static/index.js"></script>
+
+    <style>
+        body {
+            font-family: "Quicksand", sans-serif;
+        }
+    </style>
+
+</head>
+
+
+<!--<style>-->
+<!--  body {background-color: #FBCBD3; font-family: "Trebuchet MS";}-->
+
+<!--</style>-->
+
+
+<h1 class="title">*website name*</h1>
+<h1 class="title-caption">welcome to your virtual fridge and pantry</h1>
+<br />
+
+<h2>add food to your virtual pantry</h2>
+<h3>keep track of what you have in stock without having to dig through your fridge and pantry!</h3>
+
+
+<!--<div class="icons">
+  <div class="icons-slide">
+    <img src="../static/images/corn.png" alt="corn">
+    <img src="../static/images/soymilk.png" alt="soymilk">
+    <img src="../static/images/meat.png" alt="meat">
+    <img src="../static/images/rice.png" alt="rice">
+    <img src="../static/images/onion.png" alt="onion">
+    <img src="../static/images/orange.png" alt="orange">
+
+
+    <img src="../static/images/corn.png" alt="corn">
+    <img src="../static/images/soymilk.png" alt="soymilk">
+    <img src="../static/images/meat.png" alt="meat">
+    <img src="../static/images/rice.png" alt="rice">
+    <img src="../static/images/onion.png" alt="onion">
+    <img src="../static/images/orange.png" alt="orange">
+  </div>
+</div>-->
+
+<br />
+
+<h2>always know what you need to buy</h2>
+<h3>*website name* lists items that are expiring soon and items with a low supply</h3>
+
+<h2>add your own personalized recipes</h2>
+<h3>customize and add your recipes! each time you cook and record a recipe, *website name* will subtract the necessary ingredient amounts from your virtual fridge and pantry</h3>
+
+<ul class="list-group list-group-flush" id="notes">
+  {% for note in user.notes %}
+  <li class="list-group-item">
+    {{ note.data }}
+    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+<form method="POST">
+  <textarea name="note" id="note" class="form-control"></textarea>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Note</button>
+  </div>
+</form>
+{% endblock %}
